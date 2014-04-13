@@ -30,7 +30,8 @@ describe('ConcoctJS Plugins Handling Test', function() {
 
         options = {
             plugins: [piJustCall, piReceiveTemplates],
-            templates: './test/templates'
+            templates: './test/templates/*.tpl',
+            contexts: []
         };
 
     });

@@ -6,7 +6,8 @@ describe('ConcoctJS Options Test', function() {
     describe('without a \'templates\' field', function() {
 
         var concoct = new Concoct({
-            plugins: []
+            plugins: [],
+            contexts: []
         });
 
         it('should give a callback error', function(done) {
@@ -24,7 +25,8 @@ describe('ConcoctJS Options Test', function() {
 
         var concoct = new Concoct({
             plugins: [],
-            templates: 5
+            templates: 5,
+            contexts: []
         });
 
         it('should give a callback error', function(done) {
@@ -42,31 +44,14 @@ describe('ConcoctJS Options Test', function() {
 
         var concoct = new Concoct({
             plugins: [],
-            templates: []
+            templates: [],
+            contexts: []
         });
 
-        it('should NOT give a callback error', function(done) {
+        it('should not give a callback error', function(done) {
 
             concoct.concoct(function(err) {
                 assert(!err);
-                done();
-            });
-
-        })
-
-    });
-
-    describe('with an invalid templates path', function() {
-
-        var concoct = new Concoct({
-            plugins: [],
-            templates: 'sdj9839noisdfsf4d3fsdf'
-        });
-
-        it('should give a callback error', function(done) {
-
-            concoct.concoct(function(err) {
-                assert( !! err);
                 done();
             });
 
@@ -78,10 +63,11 @@ describe('ConcoctJS Options Test', function() {
 
         var concoct = new Concoct({
             plugins: [],
-            templates: './test/templates'
+            templates: './test/templates/*.tpl',
+            contexts: []
         });
 
-        it('should NOT give a callback error', function(done) {
+        it('should not give a callback error', function(done) {
 
             concoct.concoct(function(err) {
                 assert(!err);
@@ -96,10 +82,11 @@ describe('ConcoctJS Options Test', function() {
 
         var concoct = new Concoct({
             plugins: [],
-            templates: ['./test/templates']
+            templates: ['./test/templates/*.tpl'],
+            contexts: []
         });
 
-        it('should NOT give a callback error', function(done) {
+        it('should not give a callback error', function(done) {
 
             concoct.concoct(function(err) {
                 assert(!err);

@@ -1,36 +1,37 @@
 {
-    "name": "concoct",
-    "version": "0.0.0",
-    "description": "A content compiler on Node.js",
-    "main": "lib/index.js",
-    "scripts": {
-        "test": "mocha -R spec ./test/tests"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/EyalAr/ConcoctJS.git"
-    },
-    "keywords": [
-        "static",
-        "website",
-        "generator",
-        "markdown",
-        "template",
-        "compiler"
-    ],
-    "author": "Eyal Arubas <eyalarubas@gmail.com>",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/EyalAr/ConcoctJS/issues"
-    },
-    "homepage": "https://github.com/EyalAr/ConcoctJS",
-    "dependencies": {
-        "marked": "^0.3.2",
-        "mustache": "^0.8.1",
-        "async": "^0.7.0",
-        "debug": "^0.8.0"
-    },
-    "devDependencies": {
-        "mocha": "^1.18.2"
-    }
+  "name": "concoct",
+  "version": "0.0.0",
+  "description": "A content compiler on Node.js",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha -R spec ./test/tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EyalAr/ConcoctJS.git"
+  },
+  "keywords": [
+    "static",
+    "website",
+    "generator",
+    "markdown",
+    "template",
+    "compiler"
+  ],
+  "author": "Eyal Arubas <eyalarubas@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EyalAr/ConcoctJS/issues"
+  },
+  "homepage": "https://github.com/EyalAr/ConcoctJS",
+  "dependencies": {
+    "marked": "^0.3.2",
+    "mustache": "^0.8.1",
+    "async": "^0.7.0",
+    "debug": "^0.8.0",
+    "glob": "~3.2.9"
+  },
+  "devDependencies": {
+    "mocha": "^1.18.2"
+  }
 }
