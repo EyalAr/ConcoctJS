@@ -1,10 +1,10 @@
 {
-    "name": "concoctjs",
+    "name": "concoct",
     "version": "0.0.0",
-    "description": "A static website generator on Node.js",
+    "description": "A content compiler on Node.js",
     "main": "lib/index.js",
     "scripts": {
-        "test": "mocha -R spec --recursive ./test/"
+        "test": "mocha -R spec ./test/tests"
     },
     "repository": {
         "type": "git",
@@ -14,7 +14,9 @@
         "static",
         "website",
         "generator",
-        "markdown"
+        "markdown",
+        "template",
+        "compiler"
     ],
     "author": "Eyal Arubas <eyalarubas@gmail.com>",
     "license": "ISC",
