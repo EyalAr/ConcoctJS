@@ -1,57 +1,112 @@
 var assert = require('assert'),
     Concoct = require('../../');
 
-describe('ConcoctJS', function() {
+describe('ConcoctJS Options Test', function() {
 
-    var options, concoct, piJustCall, piReceiveTemplates;
+    describe('without a \'templates\' field', function() {
 
-    before(function() {
+        var concoct = new Concoct({
+            plugins: []
+        });
 
-        piJustCall = {
-            name: 'Just Call',
-            handler: require('../dummyPlugins/justCall'),
-            params: {
-                called: false
-            }
-        }
+        it('should give a callback error', function(done) {
 
-        piReceiveTemplates = {
-            name: 'Receive Templates',
-            handler: require('../dummyPlugins/receiveTemplates'),
-            params: {
-                called: false,
-                templates: null
-            }
-        }
+            concoct.concoct(function(err) {
+                assert( !! err);
+                done();
+            });
+
+        })
 
     });
 
-    before(function() {
+    describe('with \'templates\' field not an array or string', function() {
 
-        options = {
-            plugins: [piJustCall, piReceiveTemplates],
-            src: './test/templates'
-        };
+        var concoct = new Concoct({
+            plugins: [],
+            templates: 5
+        });
 
-    });
+        it('should give a callback error', function(done) {
 
-    before(function(done) {
+            concoct.concoct(function(err) {
+                assert( !! err);
+                done();
+            });
 
-        concoct = new Concoct(options);
-        concoct.concoct(done);
-
-    });
-
-    it('should call all plugged plugins', function() {
-
-        assert(piJustCall.params.called === true);
-        assert(piReceiveTemplates.params.called === true);
+        })
 
     });
 
-    it('should read all templates', function() {
+    describe('with 0 templates', function() {
 
-        assert(piReceiveTemplates.params.templates !== null); // TODO imporove test
+        var concoct = new Concoct({
+            plugins: [],
+            templates: []
+        });
+
+        it('should NOT give a callback error', function(done) {
+
+            concoct.concoct(function(err) {
+                assert(!err);
+                done();
+            });
+
+        })
+
+    });
+
+    describe('with an invalid templates path', function() {
+
+        var concoct = new Concoct({
+            plugins: [],
+            templates: 'sdj9839noisdfsf4d3fsdf'
+        });
+
+        it('should give a callback error', function(done) {
+
+            concoct.concoct(function(err) {
+                assert( !! err);
+                done();
+            });
+
+        })
+
+    });
+
+    describe('with a valid templates path as a string', function() {
+
+        var concoct = new Concoct({
+            plugins: [],
+            templates: './test/templates'
+        });
+
+        it('should NOT give a callback error', function(done) {
+
+            concoct.concoct(function(err) {
+                assert(!err);
+                done();
+            });
+
+        })
+
+    });
+
+    describe('with a valid templates path as an array', function() {
+
+        var concoct = new Concoct({
+            plugins: [],
+            templates: ['./test/templates']
+        });
+
+        it('should NOT give a callback error', function(done) {
+
+            concoct.concoct(function(err) {
+                assert(!err);
+                done();
+            });
+
+        })
 
     });
 
