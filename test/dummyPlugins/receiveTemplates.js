@@ -1,5 +1,5 @@
 module.exports = function(params, templates, data, done) {
-	params.called = true;
-	params.templates = templates;
-	done();
+    params.called = true;
+    params.templates = templates;
+    done();
 };
