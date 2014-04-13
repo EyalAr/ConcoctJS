@@ -59,12 +59,12 @@ describe('ConcoctJS Options Test', function() {
 
     });
 
-    describe('with a valid templates path as a string', function() {
+    describe('with a valid templates and contexts path as a string', function() {
 
         var concoct = new Concoct({
             plugins: [],
             templates: './test/templates/*.tpl',
-            contexts: []
+            contexts: './test/contexts/*.json'
         });
 
         it('should not give a callback error', function(done) {
@@ -83,7 +83,7 @@ describe('ConcoctJS Options Test', function() {
         var concoct = new Concoct({
             plugins: [],
             templates: ['./test/templates/*.tpl'],
-            contexts: []
+            contexts: ['./test/contexts/*.json']
         });
 
         it('should not give a callback error', function(done) {
