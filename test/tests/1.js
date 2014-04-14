@@ -78,12 +78,14 @@ describe('ConcoctJS Options Test', function() {
 
     });
 
-    describe('with a valid templates path as an array', function() {
+    describe('with a valid templates and contexts path as an array', function() {
 
         var concoct = new Concoct({
             plugins: [],
             templates: ['./test/templates/*.tpl'],
-            contexts: ['./test/contexts/*.json']
+            contexts: [
+                ['./test/contexts/2.json'], './test/contexts/1.json' //nested arrays should also work
+            ]
         });
 
         it('should not give a callback error', function(done) {
