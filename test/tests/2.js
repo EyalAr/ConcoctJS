@@ -19,20 +19,37 @@ describe('ConcoctJS Operations Test', function() {
             "bar": "FOO"
         },
         links = [{
-            contextPath: resolve(process.cwd(), './test/contexts/1.json'),
-            templatePath: resolve(process.cwd(), './test/templates/1.tpl')
+            contextPath: c1Path,
+            templatePath: t1Path
         }, {
-            contextPath: resolve(process.cwd(), './test/contexts/1.json'),
-            templatePath: resolve(process.cwd(), './test/templates/2.tpl')
+            contextPath: c1Path,
+            templatePath: t2Path
         }, {
-            contextPath: resolve(process.cwd(), './test/contexts/2.json'),
-            templatePath: resolve(process.cwd(), './test/templates/1.tpl')
+            contextPath: c2Path,
+            templatePath: t1Path
         }, {
-            contextPath: resolve(process.cwd(), './test/contexts/2.json'),
-            templatePath: resolve(process.cwd(), './test/templates/2.tpl')
+            contextPath: c2Path,
+            templatePath: t2Path
+        }],
+        buffers = [{
+            link: links[0],
+            content: t1con,
+            path: resolve(process.cwd(), 'content/1 (1)')
+        }, {
+            link: links[1],
+            content: t2con,
+            path: resolve(process.cwd(), 'content/2 (1)')
+        }, {
+            link: links[2],
+            content: t1con,
+            path: resolve(process.cwd(), 'content/1 (2)')
+        }, {
+            link: links[3],
+            content: t2con,
+            path: resolve(process.cwd(), 'content/2 (2)')
         }];
 
-    var options, concoct, piJustCall, piReceiveTemplates, piReceiveLinks;
+    var options, concoct, piJustCall, piReceiveTemplates, piReceiveLinks, piReceiveBuffers;
 
     before(function() {
 
@@ -71,17 +88,27 @@ describe('ConcoctJS Operations Test', function() {
             }
         };
 
+        piReceiveBuffers = {
+            name: 'Receive Buffers',
+            handler: require('../dummyPlugins/receiveBuffers'),
+            params: {
+                called: false,
+                buffers: null
+            }
+        };
+
     });
 
     before(function() {
 
         options = {
-            plugins: [piJustCall, piReceiveTemplates, piReceiveContexts, piReceiveLinks],
+            plugins: [piJustCall, piReceiveTemplates, piReceiveContexts, piReceiveLinks, piReceiveBuffers],
             templates: './test/templates/*.tpl',
             contexts: './test/contexts/*.json',
             linkingRules: {
                 './test/contexts/*.json': './test/templates/*.tpl'
-            }
+            },
+            dest: 'content'
         };
 
     });
@@ -165,7 +192,7 @@ describe('ConcoctJS Operations Test', function() {
 
     it('should have exactly four links', function() {
 
-        Object.keys(piReceiveLinks.params.links).should.have.length(4);
+        piReceiveLinks.params.links.should.have.length(4);
 
     });
 
@@ -175,6 +202,28 @@ describe('ConcoctJS Operations Test', function() {
         piReceiveLinks.params.links.should.containEql(links[1]);
         piReceiveLinks.params.links.should.containEql(links[2]);
         piReceiveLinks.params.links.should.containEql(links[3]);
+
+    });
+
+    it('should initialize the buffers array', function() {
+
+        piReceiveBuffers.params.buffers.should.be.ok;
+        piReceiveBuffers.params.buffers.should.be.an.Array;
+
+    });
+
+    it('should have exactly four buffers', function() {
+
+        piReceiveBuffers.params.buffers.should.have.length(4);
+
+    });
+
+    it('should have the correct buffers', function() {
+
+        piReceiveBuffers.params.buffers.should.containEql(buffers[0]);
+        piReceiveBuffers.params.buffers.should.containEql(buffers[1]);
+        piReceiveBuffers.params.buffers.should.containEql(buffers[2]);
+        piReceiveBuffers.params.buffers.should.containEql(buffers[3]);
 
     });
 
