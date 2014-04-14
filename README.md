@@ -30,14 +30,16 @@ Linking rules are defined with a glob pattern matching dictionary. So from `x` t
 
 #### Compile all contexts in 'contexts' directory against all templates in 'templates' directory:
 
-    #!Javascript
-    {
-        "contexts/*.json": "templates/*.tpl"
-    }
+```Javascript
+{
+    "contexts/*.json": "templates/*.tpl"
+}
+```
 
 #### Compile all contexts against the 'article.tpl' template:
 
-    #!Javascript
-    {
-        "contexts/*.json": "templates/article.tpl"
-    }
+```Javascript
+{
+    "contexts/*.json": "templates/article.tpl"
+}
+```
