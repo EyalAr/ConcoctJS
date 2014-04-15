@@ -3,13 +3,13 @@ var should = require('should'),
 
 describe('ConcoctJS Operations Test', function() {
 
-    var resolve = require('path').resolve,
-        t1Path = resolve(process.cwd(), './test/templates/1.tpl'),
-        t2Path = resolve(process.cwd(), './test/templates/2.tpl'),
+    var norm = require('path').normalize,
+        t1Path = norm('./test/templates/1.tpl'),
+        t2Path = norm('./test/templates/2.tpl'),
         t1con = '{{foo}} {{bar}}',
         t2con = '{{foo}} {{foo}} {{bar}} {{bar}}',
-        c1Path = resolve(process.cwd(), './test/contexts/1.json'),
-        c2Path = resolve(process.cwd(), './test/contexts/2.json'),
+        c1Path = norm('./test/contexts/1.json'),
+        c2Path = norm('./test/contexts/2.json'),
         c1con = {
             "foo": "FOO",
             "bar": "BAR"
@@ -34,19 +34,19 @@ describe('ConcoctJS Operations Test', function() {
         buffers = [{
             link: links[0],
             content: t1con,
-            path: resolve(process.cwd(), 'content/1 (1)')
+            path: norm('./test/content/1 (1)')
         }, {
             link: links[1],
             content: t2con,
-            path: resolve(process.cwd(), 'content/2 (1)')
+            path: norm('./test/content/2 (1)')
         }, {
             link: links[2],
             content: t1con,
-            path: resolve(process.cwd(), 'content/1 (2)')
+            path: norm('./test/content/1 (2)')
         }, {
             link: links[3],
             content: t2con,
-            path: resolve(process.cwd(), 'content/2 (2)')
+            path: norm('./test/content/2 (2)')
         }];
 
     var options, concoct, piJustCall, piReceiveTemplates, piReceiveLinks, piReceiveBuffers;
@@ -108,8 +108,24 @@ describe('ConcoctJS Operations Test', function() {
             linkingRules: {
                 './test/contexts/*.json': './test/templates/*.tpl'
             },
-            dest: 'content'
+            dest: './test/content'
         };
+
+    });
+
+    before(function(done) {
+
+        var async = require('async'),
+            fs = require('fs');
+
+        async.each(buffers, function(buffer, done) {
+            fs.unlink(buffer.path, function(err){
+                if (err && err.code === 'ENOENT'){
+                    return done();
+                }
+                done(err);
+            });
+        }, done);
 
     });
 
@@ -224,6 +240,28 @@ describe('ConcoctJS Operations Test', function() {
         piReceiveBuffers.params.buffers.should.containEql(buffers[1]);
         piReceiveBuffers.params.buffers.should.containEql(buffers[2]);
         piReceiveBuffers.params.buffers.should.containEql(buffers[3]);
+
+    });
+
+    it('should write all buffers to disk', function(done) {
+
+        var async = require('async'),
+            fs = require('fs');
+
+        async.each(buffers, function(buffer, done) {
+
+            fs.readFile(buffer.path, function(err, data) {
+
+                if (err) {
+                    return done(err);
+                }
+
+                data.toString().should.be.exactly(buffer.content);
+                done();
+
+            });
+
+        }, done);
 
     });
 
