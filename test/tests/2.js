@@ -1,15 +1,15 @@
 var should = require('should'),
     Concoct = require('../../');
 
-describe('ConcoctJS Operations Test', function() {
+describe('ConcoctJS Tasks Test', function() {
 
     var norm = require('path').normalize,
         t1Path = norm('./test/templates/1.tpl'),
         t2Path = norm('./test/templates/2.tpl'),
         t1con = '{{foo}} {{bar}}',
         t2con = '{{foo}} {{foo}} {{bar}} {{bar}}',
-        c1Path = norm('./test/contexts/1.json'),
-        c2Path = norm('./test/contexts/2.json'),
+        c1Path = norm('./test/contexts/valid1.json'),
+        c2Path = norm('./test/contexts/valid2.json'),
         c1con = {
             "foo": "FOO",
             "bar": "BAR"
@@ -34,22 +34,22 @@ describe('ConcoctJS Operations Test', function() {
         buffers = [{
             link: links[0],
             content: t1con,
-            path: norm('./test/content/1 (1)')
+            path: norm('./test/content/1 (valid1)')
         }, {
             link: links[1],
             content: t2con,
-            path: norm('./test/content/2 (1)')
+            path: norm('./test/content/2 (valid1)')
         }, {
             link: links[2],
             content: t1con,
-            path: norm('./test/content/1 (2)')
+            path: norm('./test/content/1 (valid2)')
         }, {
             link: links[3],
             content: t2con,
-            path: norm('./test/content/2 (2)')
+            path: norm('./test/content/2 (valid2)')
         }];
 
-    var options, concoct, piJustCall, piReceiveTemplates, piReceiveLinks, piReceiveBuffers;
+    var options, concoct, piJustCall, piReceiveTemplates, piReceiveContexts, piReceiveLinks, piReceiveBuffers;
 
     before(function() {
 
@@ -66,7 +66,7 @@ describe('ConcoctJS Operations Test', function() {
             handler: require('../dummyPlugins/receiveTemplates'),
             params: {
                 called: false,
-                templates: null
+                templates: undefined
             }
         };
 
@@ -75,7 +75,7 @@ describe('ConcoctJS Operations Test', function() {
             handler: require('../dummyPlugins/receiveContexts'),
             params: {
                 called: false,
-                contexts: null
+                contexts: undefined
             }
         };
 
@@ -84,7 +84,7 @@ describe('ConcoctJS Operations Test', function() {
             handler: require('../dummyPlugins/receiveLinks'),
             params: {
                 called: false,
-                links: null
+                links: undefined
             }
         };
 
@@ -93,7 +93,7 @@ describe('ConcoctJS Operations Test', function() {
             handler: require('../dummyPlugins/receiveBuffers'),
             params: {
                 called: false,
-                buffers: null
+                buffers: undefined
             }
         };
 
@@ -104,9 +104,9 @@ describe('ConcoctJS Operations Test', function() {
         options = {
             plugins: [piJustCall, piReceiveTemplates, piReceiveContexts, piReceiveLinks, piReceiveBuffers],
             templates: './test/templates/*.tpl',
-            contexts: './test/contexts/*.json',
+            contexts: './test/contexts/valid*.json',
             linkingRules: {
-                './test/contexts/*.json': './test/templates/*.tpl'
+                './test/contexts/valid*.json': './test/templates/*.tpl'
             },
             dest: './test/content'
         };
