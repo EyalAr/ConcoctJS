@@ -1,7 +1,7 @@
 {
   "name": "concoct",
-  "version": "0.0.0",
-  "description": "A content compiler on Node.js",
+  "version": "0.0.1",
+  "description": "A content compiler on Node.js. ConcoctJS knows how to compile templates with some context and write the results to disk. Anything in the middle is up to plugins. ConcoctJS works with any templating engine, as long as there is a plugin to handle it. The contexts with which templates are compiled are simply JSON objects.",
   "main": "lib/index.js",
   "scripts": {
     "test": "DEBUG=\"concoct:* -concoct:debug\" mocha -R spec ./test/tests"
@@ -11,11 +11,9 @@
     "url": "https://github.com/EyalAr/ConcoctJS.git"
   },
   "keywords": [
-    "static",
-    "website",
-    "generator",
-    "markdown",
     "template",
+    "context",
+    "content",
     "compiler"
   ],
   "author": "Eyal Arubas <eyalarubas@gmail.com>",

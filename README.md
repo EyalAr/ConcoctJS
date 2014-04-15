@@ -21,7 +21,7 @@ Contexts are linked to templates using one of the following:
 2. Plugin(s).
 3. Combination of (1) and (2).
 
-ConcoctsJS workflow is simple:
+ConcoctJS' workflow is simple:
 
 1. Load templates and contexts from disk.
 2. Link contexts to templates.
@@ -30,7 +30,7 @@ ConcoctsJS workflow is simple:
 
 If no plugin is present to actually compile the templates, then all the buffers are just copies of the uncompiled templates.
 
-The Concoct module exports a constructor which receives an [`options`](#options) object with the following fields:
+The ConcoctJS module exports a constructor which receives an [`options`](#options) object with the following fields:
 
 * [templates](#templates)
 * [contexts](#contexts)
@@ -47,7 +47,7 @@ The constructed object has only one public method - [`concoct()`](#concoct).
 **Type:** String / Array  
 **Required:** yes
 
-Tells concoct where to find templates.
+Tells Concoct where to find templates.
 Can be specified as a glob pattern string, or an array of such strings.
 
 #### Example
@@ -67,7 +67,7 @@ Can be specified as a glob pattern string, or an array of such strings.
 **Type:** String / Array  
 **Required:** yes
 
-Tells concoct where to find contexts.
+Tells Concoct where to find contexts.
 Works the same as the [`templates`](#templates) field (see above).
 
 ### `plugins`
@@ -117,7 +117,7 @@ The `concoct` method starts the concoction process.
 
 ## Plugins
 
-A 'plugin' object contains the information needed by concoct to run the plugin.
+A 'plugin' object contains the information needed by Concoct to run the plugin.
 It needs to have to following fields (all are optional)
 
 1. [name](#name)
@@ -150,7 +150,7 @@ An object to be passed to the plugin's handler function.
 ## Usage
 
 ```Javascript
-var Concoct = require('concoct'),
+var Concoction = require('concoct'),
     options = {
         plugins: [ /* list of plugins */ ],
         templates: [ /* paths to templates */ ],
@@ -160,7 +160,7 @@ var Concoct = require('concoct'),
         },
         dest: /* destination path */
     },
-    c = new Concoct(options);
+    c = new Concoction(options);
 
 c.concoct(function(err) {
     /* Done. Check err. */
@@ -169,7 +169,7 @@ c.concoct(function(err) {
 
 ## Debugging
 
-Concoct provides logs on four levels: info, error, warn and debug.
+ConcoctJS provides logs on four levels: `info`, `error`, `warn` and `debug`.
 
 Logging is enabled/disabled with the environment variable `DEBUG`.
 
